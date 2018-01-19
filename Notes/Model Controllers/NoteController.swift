@@ -50,6 +50,19 @@ class NoteController {
             //Delete handles its own save request.
         }
     }
+    //Moves a note to a diffenent position in its [Note] if possible and returns true or returns false if the requested start index or end index are out of range.
+    func moveNote(from startIndex: Int, to endIndex: Int) -> Bool{
+        let notesRange = 0 ..<  self.count
+        if notesRange.contains(startIndex) && notesRange.contains(endIndex){
+            let note = notes.remove(at: startIndex)
+            notes.insert(note, at: endIndex)
+            saveToPersistentStorage()
+            return true
+        }else{
+            return false
+        }
+        
+    }
     //DELETE
     ///Delete a note owned by this instance of NoteController. Returns true if the note was deleted and false otherwise.
     func delete(note: Note){

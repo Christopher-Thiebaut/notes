@@ -15,12 +15,8 @@ class NotesTableViewController: UITableViewController {
     //MARK: LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // Allow the user to put the tableview into editing mode.
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,10 +51,15 @@ class NotesTableViewController: UITableViewController {
         return cell
     }
     
+    // Allow users to re-order notes.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+        //Change the order of the cells in the tableview
+        if noteController.moveNote(from: fromIndexPath.row, to: to.row){
+            tableView.moveRow(at: fromIndexPath, to: to)
+        }
+    }
 
-
-    
-    // Override to support editing the table view.
+    // Allow users to delete a note by swiping left.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
